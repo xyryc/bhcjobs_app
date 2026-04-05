@@ -12,28 +12,19 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
-
-interface FormData {
-  mobileNumber: string;
-  password: string;
-}
-
-interface FormErrors {
-  mobileNumber?: string;
-  password?: string;
-}
+import type { LoginFormData, LoginFormErrors } from "../types/authForms";
 
 export const LoginScreen = () => {
   const router = useRouter();
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<LoginFormData>({
     mobileNumber: "",
     password: "",
   });
 
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [errors, setErrors] = useState<LoginFormErrors>({});
   const [loading, setLoading] = useState(false);
 
-  const updateField = (field: keyof FormData, value: string) => {
+  const updateField = (field: keyof LoginFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
     if (errors[field]) {
@@ -42,7 +33,7 @@ export const LoginScreen = () => {
   };
 
   const validateForm = (): boolean => {
-    const newErrors: FormErrors = {};
+    const newErrors: LoginFormErrors = {};
 
     // Mobile Number validation
     if (!formData.mobileNumber.trim()) {

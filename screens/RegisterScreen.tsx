@@ -1,5 +1,6 @@
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -14,28 +15,9 @@ import { Checkbox } from "../components/ui/Checkbox";
 import { DatePicker } from "../components/ui/DatePicker";
 import { Input } from "../components/ui/Input";
 import { Picker } from "../components/ui/Picker";
-
-interface FormData {
-  fullName: string;
-  mobileNumber: string;
-  dateOfBirth: Date | null;
-  passportNo: string;
-  gender: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-interface FormErrors {
-  fullName?: string;
-  mobileNumber?: string;
-  dateOfBirth?: string;
-  passportNo?: string;
-  gender?: string;
-  email?: string;
-  password?: string;
-  confirmPassword?: string;
-}
+import { useRegisterMutation } from "../store/services/authApi";
+import type { ApiErrorResponse } from "../types/auth";
+import type { RegisterFormData, RegisterFormErrors } from "../types/authForms";
 
 const genderOptions = [
   { label: "Male", value: "male" },
@@ -45,7 +27,8 @@ const genderOptions = [
 
 export const RegisterScreen = () => {
   const router = useRouter();
-  const [formData, setFormData] = useState<FormData>({
+  const [register] = useRegisterMutation();
+  const [formData, setFormData] = useState<RegisterFormData>({
     fullName: "",
     mobileNumber: "",
     dateOfBirth: null,
@@ -56,11 +39,14 @@ export const RegisterScreen = () => {
     confirmPassword: "",
   });
 
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [errors, setErrors] = useState<RegisterFormErrors>({});
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const updateField = (field: keyof FormData, value: any) => {
+  const updateField = (
+    field: keyof RegisterFormData,
+    value: string | Date | null
+  ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
     if (errors[field]) {
@@ -69,7 +55,7 @@ export const RegisterScreen = () => {
   };
 
   const validateForm = (): boolean => {
-    const newErrors: FormErrors = {};
+    const newErrors: RegisterFormErrors = {};
 
     // Full Name validation
     if (!formData.fullName.trim()) {
@@ -135,6 +121,13 @@ export const RegisterScreen = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  const formatDateForApi = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   const handleSignUp = async () => {
     if (!validateForm()) {
       return;
@@ -148,13 +141,30 @@ export const RegisterScreen = () => {
     setLoading(true);
 
     try {
-      console.log("Form data:", formData);
+      if (!formData.dateOfBirth) {
+        alert("Date of birth is required");
+        return;
+      }
 
-      alert("Registration successful!");
-      router.replace("/home");
+      const payload = {
+        name: formData.fullName.trim(),
+        phone: formData.mobileNumber.trim(),
+        dob: formatDateForApi(formData.dateOfBirth),
+        passport_number: formData.passportNo.trim(),
+        gender: formData.gender,
+        email: formData.email.trim().toLowerCase(),
+        password: formData.password,
+        confirm_password: formData.confirmPassword,
+      };
+
+      const response = await register(payload).unwrap();
+      alert(response.message || "Registration successful!");
+      router.replace("/");
     } catch (error) {
       console.error("Registration error:", error);
-      alert("Registration failed. Please try again.");
+      const fetchError = error as FetchBaseQueryError;
+      const data = fetchError.data as ApiErrorResponse | undefined;
+      alert(data?.message || "Registration failed. Please try again.");
     } finally {
       setLoading(false);
     }
