@@ -15,9 +15,7 @@ import { Checkbox } from "../components/ui/Checkbox";
 import { DatePicker } from "../components/ui/DatePicker";
 import { Input } from "../components/ui/Input";
 import { Picker } from "../components/ui/Picker";
-import { useAppDispatch } from "../store/hooks";
 import { useRegisterMutation } from "../store/services/authApi";
-import { setCredentials } from "../store/slices/authSlice";
 import type { RegisterFormData, RegisterFormErrors } from "../types/authForms";
 import { getErrorMessage } from "../utils/errorHandler";
 
@@ -29,7 +27,6 @@ const genderOptions = [
 
 export const RegisterScreen = () => {
   const router = useRouter();
-  const dispatch = useAppDispatch();
   const [register] = useRegisterMutation();
   const [formData, setFormData] = useState<RegisterFormData>({
     fullName: "",
@@ -161,22 +158,14 @@ export const RegisterScreen = () => {
       };
 
       const response = await register(payload).unwrap();
-      const token = response.token || response.data?.token || "";
-      if (response.data) {
-        dispatch(
-          setCredentials({
-            user: {
-              id: response.data.id,
-              fullName: response.data.name,
-              email: response.data.email,
-              mobileNumber: response.data.phone,
-            },
-            token,
-          }),
-        );
-      }
       alert(response.message || "Registration successful!");
-      router.replace("/");
+      router.push({
+        pathname: "/verify-otp",
+        params: {
+          phone: response.data?.phone || formData.mobileNumber.trim(),
+          email: response.data?.email || formData.email.trim().toLowerCase(),
+        },
+      });
     } catch (error) {
       const errorMessage = getErrorMessage(error);
       Alert.alert("Registration Failed", errorMessage);

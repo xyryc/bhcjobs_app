@@ -1,23 +1,13 @@
-import type {
-  LoginErrorResponse,
-  RegisterErrorResponse,
-} from "../store/services/authApi";
-
 export const getErrorMessage = (error: any): string => {
-  if (error?.data?.status === false && error?.data?.error) {
-    const errors = error.data.error as
-      | RegisterErrorResponse["error"]
-      | LoginErrorResponse["error"]
-      | string;
-
-    if (typeof errors === "string") {
-      return errors;
+  if (error?.data?.status === false) {
+    if (error.data.message) {
+      return error.data.message;
     }
 
-    if (errors && typeof errors === "object") {
-      const firstField = Object.keys(errors)[0];
-      if (firstField && Array.isArray(errors[firstField])) {
-        return errors[firstField][0];
+    if (error.data.error && typeof error.data.error === "object") {
+      const firstField = Object.keys(error.data.error)[0];
+      if (firstField && Array.isArray(error.data.error[firstField])) {
+        return error.data.error[firstField][0];
       }
     }
   }

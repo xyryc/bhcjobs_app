@@ -26,6 +26,23 @@ export interface RegisterResponse {
   };
 }
 
+export interface VerifyOTPRequest {
+  phone: string;
+  otp: string;
+}
+
+export interface VerifyOTPResponse {
+  status: boolean;
+  message: string;
+  data?: {
+    token: string;
+    user_id: number;
+    phone: string;
+    email: string;
+    name: string;
+  };
+}
+
 export interface ApiErrorResponse {
   status?: boolean;
   message?: string;

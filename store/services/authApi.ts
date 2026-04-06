@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { RegisterRequest, RegisterResponse } from "../../types/auth";
+import type {
+  RegisterRequest,
+  RegisterResponse,
+  VerifyOTPRequest,
+  VerifyOTPResponse,
+} from "../../types/auth";
 import type { RootState } from "../store";
 
 export interface RegisterErrorResponse {
@@ -49,7 +54,23 @@ export const authApi = createApi({
       transformErrorResponse: (response: { data?: unknown }) =>
         response.data || response,
     }),
+    verifyOTP: builder.mutation<VerifyOTPResponse, VerifyOTPRequest>({
+      query: (data) => {
+        const formData = new FormData();
+        formData.append("phone", data.phone);
+        formData.append("otp", data.otp);
+
+        return {
+          url: "/api/job_seeker/phone_verify",
+          method: "POST",
+          body: formData,
+        };
+      },
+      transformErrorResponse: (response: { data?: unknown }) =>
+        response.data || response,
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
-export const { useRegisterMutation } = authApi;
+export const { useRegisterMutation, useVerifyOTPMutation } = authApi;
