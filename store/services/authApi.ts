@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type {
+  LoginRequest,
+  LoginResponse,
   RegisterRequest,
   RegisterResponse,
   VerifyOTPRequest,
@@ -33,6 +35,21 @@ export const authApi = createApi({
   }),
   tagTypes: ["User"],
   endpoints: (builder) => ({
+    login: builder.mutation<LoginResponse, LoginRequest>({
+      query: (data) => {
+        const formData = new FormData();
+        formData.append("phone", data.phone);
+        formData.append("password", data.password);
+
+        return {
+          url: "/api/job_seeker/login",
+          method: "POST",
+          body: formData,
+        };
+      },
+      transformErrorResponse: (response: { data?: unknown }) =>
+        response.data || response,
+    }),
     register: builder.mutation<RegisterResponse, RegisterRequest>({
       query: (credentials) => {
         const formData = new FormData();
@@ -73,4 +90,5 @@ export const authApi = createApi({
   }),
 });
 
-export const { useRegisterMutation, useVerifyOTPMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useVerifyOTPMutation } =
+  authApi;

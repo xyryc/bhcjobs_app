@@ -9,6 +9,19 @@ export interface RegisterRequest {
   confirm_password: string;
 }
 
+export interface LoginRequest {
+  phone: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  status: boolean;
+  message: string;
+  data?: {
+    token: string;
+  };
+}
+
 export interface RegisterResponse {
   status: boolean;
   message?: string;

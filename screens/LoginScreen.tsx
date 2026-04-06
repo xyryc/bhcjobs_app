@@ -2,6 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -12,10 +13,16 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
+import { useAppDispatch } from "../store/hooks";
+import { useLoginMutation } from "../store/services/authApi";
+import { setCredentials } from "../store/slices/authSlice";
 import type { LoginFormData, LoginFormErrors } from "../types/authForms";
+import { getErrorMessage } from "../utils/errorHandler";
 
 export const LoginScreen = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const [login] = useLoginMutation();
   const [formData, setFormData] = useState<LoginFormData>({
     mobileNumber: "",
     password: "",
@@ -61,13 +68,29 @@ export const LoginScreen = () => {
     setLoading(true);
 
     try {
-      console.log("Login data:", formData);
+      const result = await login({
+        phone: formData.mobileNumber.trim(),
+        password: formData.password,
+      }).unwrap();
 
-      // navigate to home
-      router.replace("/home");
+      if (result.status && result.data?.token) {
+        dispatch(
+          setCredentials({
+            token: result.data.token,
+            user: {
+              mobileNumber: formData.mobileNumber.trim(),
+            },
+          }),
+        );
+        Alert.alert("Success", result.message || "Logged in successfully.");
+        router.replace("/home");
+        return;
+      }
+
+      Alert.alert("Login Failed", result.message || "Login failed.");
     } catch (error) {
-      console.error("Login error:", error);
-      alert("Login failed. Please check your credentials.");
+      const errorMessage = getErrorMessage(error);
+      Alert.alert("Login Failed", errorMessage);
     } finally {
       setLoading(false);
     }
