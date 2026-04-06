@@ -12,10 +12,16 @@ export interface RegisterRequest {
 export interface RegisterResponse {
   status: boolean;
   message?: string;
+  token?: string;
   data?: {
     id: number;
+    name: string;
     email: string;
     phone: string;
+    passport_number: string;
+    gender: string;
+    dob: string;
+    token?: string;
     otp: number;
   };
 }
@@ -27,7 +33,7 @@ export interface ApiErrorResponse {
 }
 
 export interface AuthUser {
-  id?: string;
+  id?: string | number;
   fullName?: string;
   email?: string;
   mobileNumber?: string;

@@ -2,6 +2,18 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { RegisterRequest, RegisterResponse } from "../../types/auth";
 import type { RootState } from "../store";
 
+export interface RegisterErrorResponse {
+  status: false;
+  message?: string;
+  error?: Record<string, string[]>;
+}
+
+export interface LoginErrorResponse {
+  status: false;
+  message?: string;
+  error?: Record<string, string[]>;
+}
+
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
@@ -14,6 +26,7 @@ export const authApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["User"],
   endpoints: (builder) => ({
     register: builder.mutation<RegisterResponse, RegisterRequest>({
       query: (credentials) => {
@@ -33,6 +46,8 @@ export const authApi = createApi({
           body: formData,
         };
       },
+      transformErrorResponse: (response: { data?: unknown }) =>
+        response.data || response,
     }),
   }),
 });

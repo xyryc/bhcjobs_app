@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -15,9 +15,11 @@ import { Checkbox } from "../components/ui/Checkbox";
 import { DatePicker } from "../components/ui/DatePicker";
 import { Input } from "../components/ui/Input";
 import { Picker } from "../components/ui/Picker";
+import { useAppDispatch } from "../store/hooks";
 import { useRegisterMutation } from "../store/services/authApi";
-import type { ApiErrorResponse } from "../types/auth";
+import { setCredentials } from "../store/slices/authSlice";
 import type { RegisterFormData, RegisterFormErrors } from "../types/authForms";
+import { getErrorMessage } from "../utils/errorHandler";
 
 const genderOptions = [
   { label: "Male", value: "male" },
@@ -27,6 +29,7 @@ const genderOptions = [
 
 export const RegisterScreen = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const [register] = useRegisterMutation();
   const [formData, setFormData] = useState<RegisterFormData>({
     fullName: "",
@@ -45,7 +48,7 @@ export const RegisterScreen = () => {
 
   const updateField = (
     field: keyof RegisterFormData,
-    value: string | Date | null
+    value: string | Date | null,
   ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
@@ -158,13 +161,25 @@ export const RegisterScreen = () => {
       };
 
       const response = await register(payload).unwrap();
+      const token = response.token || response.data?.token || "";
+      if (response.data) {
+        dispatch(
+          setCredentials({
+            user: {
+              id: response.data.id,
+              fullName: response.data.name,
+              email: response.data.email,
+              mobileNumber: response.data.phone,
+            },
+            token,
+          }),
+        );
+      }
       alert(response.message || "Registration successful!");
       router.replace("/");
     } catch (error) {
-      console.error("Registration error:", error);
-      const fetchError = error as FetchBaseQueryError;
-      const data = fetchError.data as ApiErrorResponse | undefined;
-      alert(data?.message || "Registration failed. Please try again.");
+      const errorMessage = getErrorMessage(error);
+      Alert.alert("Registration Failed", errorMessage);
     } finally {
       setLoading(false);
     }
@@ -174,12 +189,16 @@ export const RegisterScreen = () => {
     <SafeAreaView className="flex-1 bg-gray-50">
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 16 : 24}
         className="flex-1"
       >
         <ScrollView
           className="flex-1"
           contentContainerClassName="px-6 py-8"
+          contentContainerStyle={{ paddingBottom: 40 }}
           showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag"
         >
           <Text className="text-3xl font-bold text-blue-500 text-center mb-8">
             Create an account
