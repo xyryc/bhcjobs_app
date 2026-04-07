@@ -10,13 +10,13 @@ interface DatePickerProps {
   required?: boolean;
 }
 
-export const DatePicker: React.FC<DatePickerProps> = ({
+export const DatePicker = ({
   label,
   value,
   onChange,
   error,
   required = false,
-}) => {
+}: DatePickerProps) => {
   const [show, setShow] = useState(false);
 
   const handleChange = (event: any, selectedDate?: Date) => {

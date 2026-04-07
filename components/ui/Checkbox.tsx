@@ -8,11 +8,11 @@ interface CheckboxProps {
   label?: React.ReactNode;
 }
 
-export const Checkbox: React.FC<CheckboxProps> = ({
+export const Checkbox = ({
   checked,
   onChange,
   label,
-}) => {
+}: CheckboxProps) => {
   return (
     <TouchableOpacity
       onPress={() => onChange(!checked)}

@@ -18,7 +18,7 @@ interface PickerProps {
   icon?: keyof typeof Ionicons.glyphMap;
 }
 
-export const Picker: React.FC<PickerProps> = ({
+export const Picker = ({
   label,
   value,
   options,
@@ -27,7 +27,7 @@ export const Picker: React.FC<PickerProps> = ({
   error,
   required = false,
   icon,
-}) => {
+}: PickerProps) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const selectedOption = options.find(opt => opt.value === value);

@@ -9,13 +9,13 @@ interface ButtonProps {
   variant?: 'primary' | 'secondary';
 }
 
-export const Button: React.FC<ButtonProps> = ({
+export const Button = ({
   title,
   onPress,
   loading = false,
   disabled = false,
   variant = 'primary',
-}) => {
+}: ButtonProps) => {
   const isPrimary = variant === 'primary';
 
   return (

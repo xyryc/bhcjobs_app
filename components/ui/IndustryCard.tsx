@@ -7,10 +7,7 @@ interface IndustryCardProps {
   onPress?: (industry: Industry) => void;
 }
 
-export const IndustryCard: React.FC<IndustryCardProps> = ({
-  industry,
-  onPress,
-}) => {
+export const IndustryCard = ({ industry, onPress }: IndustryCardProps) => {
   return (
     <TouchableOpacity
       className="h-32 px-2 flex-1 items-center justify-center rounded-2xl border border-gray-200 bg-white"

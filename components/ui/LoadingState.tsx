@@ -6,9 +6,9 @@ interface LoadingStateProps {
   message?: string;
 }
 
-export const LoadingState: React.FC<LoadingStateProps> = ({
+export const LoadingState = ({
   message = "Loading...",
-}) => {
+}: LoadingStateProps) => {
   return (
     <SafeAreaView className="flex-1 items-center justify-center bg-gray-50">
       <ActivityIndicator size="large" color="#2563EB" />

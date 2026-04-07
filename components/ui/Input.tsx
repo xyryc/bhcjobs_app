@@ -10,14 +10,14 @@ interface InputProps extends TextInputProps {
   isPassword?: boolean;
 }
 
-export const Input: React.FC<InputProps> = ({
+export const Input = ({
   label,
   icon,
   error,
   required = false,
   isPassword = false,
   ...props
-}) => {
+}: InputProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (

@@ -1,5 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { GetIndustriesResponse } from "../../types/home";
+import type {
+  GetCompaniesResponse,
+  GetIndustriesResponse,
+} from "../../types/home";
 import type { RootState } from "../store";
 
 export const homeApi = createApi({
@@ -14,18 +17,34 @@ export const homeApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Industry"],
+
+  tagTypes: ["Industry", "Company"],
+
   endpoints: (builder) => ({
     getIndustries: builder.query<GetIndustriesResponse, void>({
       query: () => ({
         url: "/api/industry/get",
         method: "GET",
       }),
+
       providesTags: ["Industry"],
+
+      transformErrorResponse: (response: { data?: unknown }) =>
+        response.data || response,
+    }),
+
+    getCompanies: builder.query<GetCompaniesResponse, void>({
+      query: () => ({
+        url: "/api/company/get",
+        method: "GET",
+      }),
+
+      providesTags: ["Company"],
+
       transformErrorResponse: (response: { data?: unknown }) =>
         response.data || response,
     }),
   }),
 });
 
-export const { useGetIndustriesQuery } = homeApi;
+export const { useGetCompaniesQuery, useGetIndustriesQuery } = homeApi;

@@ -12,3 +12,18 @@ export interface GetIndustriesResponse {
   message: string;
   data: Industry[];
 }
+
+export interface Company {
+  id: number;
+  name: string;
+  is_active: number;
+  slug: string;
+  image: string;
+  jobs_count: number;
+}
+
+export interface GetCompaniesResponse {
+  status: boolean;
+  message: string;
+  data: Company[];
+}
