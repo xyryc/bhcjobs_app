@@ -1,3 +1,4 @@
+import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import type { Job } from "../../types/home";
@@ -75,12 +76,14 @@ export const JobCard = ({ job, onPress }: JobCardProps) => {
       <View className="flex-row items-center mt-2">
         <View className="mr-2 rounded-full bg-blue-100 px-3 py-1 dark:bg-blue-950">
           <Text className="text-xs font-medium capitalize text-blue-700 dark:text-blue-200">
+            <SimpleLineIcons name="location-pin" size={10} color="#1d4ed8" />{" "}
             {job?.country?.name}
           </Text>
         </View>
 
         <View className="mr-2 rounded-full bg-blue-100 px-3 py-1 dark:bg-blue-950">
           <Text className="text-xs font-medium capitalize text-blue-700 dark:text-blue-200">
+            <Ionicons name="briefcase-outline" size={10} color="#1d4ed8" />{" "}
             {job?.type}
           </Text>
         </View>
