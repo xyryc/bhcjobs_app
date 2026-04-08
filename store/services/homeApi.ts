@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type {
   GetCompaniesResponse,
   GetIndustriesResponse,
+  GetJobsResponse,
 } from "../../types/home";
 import type { RootState } from "../store";
 
@@ -18,7 +19,7 @@ export const homeApi = createApi({
     },
   }),
 
-  tagTypes: ["Industry", "Company"],
+  tagTypes: ["Industry", "Company", "Job"],
 
   endpoints: (builder) => ({
     getIndustries: builder.query<GetIndustriesResponse, void>({
@@ -44,7 +45,20 @@ export const homeApi = createApi({
       transformErrorResponse: (response: { data?: unknown }) =>
         response.data || response,
     }),
+
+    getJobs: builder.query<GetJobsResponse, void>({
+      query: () => ({
+        url: "/api/job/get",
+        method: "GET",
+      }),
+
+      providesTags: ["Job"],
+
+      transformErrorResponse: (response: { data?: unknown }) =>
+        response.data || response,
+    }),
   }),
 });
 
-export const { useGetCompaniesQuery, useGetIndustriesQuery } = homeApi;
+export const { useGetCompaniesQuery, useGetIndustriesQuery, useGetJobsQuery } =
+  homeApi;
