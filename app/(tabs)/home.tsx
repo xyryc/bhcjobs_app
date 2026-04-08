@@ -4,6 +4,7 @@ import { useColorScheme } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CompaniesSection } from "../../components/ui/CompaniesSection";
 import { ErrorState } from "../../components/ui/ErrorState";
+import { HomeBanner } from "../../components/ui/HomeBanner";
 import { IndustriesSection } from "../../components/ui/IndustriesSection";
 import { JobsSection } from "../../components/ui/JobsSection";
 import { LoadingState } from "../../components/ui/LoadingState";
@@ -52,6 +53,8 @@ export default function HomeScreen() {
       <StatusBar barStyle={isDark ? "light-content" : "dark-content"} />
 
       <ScrollView contentContainerStyle={{ paddingBottom: 24 }}>
+        <HomeBanner />
+
         <IndustriesSection
           industries={industriesResponse?.data ?? []}
           isFetching={industriesFetching}
