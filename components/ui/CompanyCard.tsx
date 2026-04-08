@@ -16,7 +16,7 @@ export const CompanyCard = ({ company, onPress }: CompanyCardProps) => {
     >
       <Image
         source={{
-          uri: `${process.env.EXPO_PUBLIC_API_BASE_URL}/storage/company-image/${company.image}`,
+          uri: `${process.env.EXPO_PUBLIC_STORAGE_BASE_URL}/company-image/${company.image}`,
         }}
         className="h-10 w-10 rounded-md"
         resizeMode="contain"

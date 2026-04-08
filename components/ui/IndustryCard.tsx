@@ -16,7 +16,7 @@ export const IndustryCard = ({ industry, onPress }: IndustryCardProps) => {
     >
       <Image
         source={{
-          uri: `${process.env.EXPO_PUBLIC_API_BASE_URL}/storage/industry-image/${industry.image}`,
+          uri: `${process.env.EXPO_PUBLIC_STORAGE_BASE_URL}/industry-image/${industry.image}`,
         }}
         className="h-8 w-8"
         resizeMode="contain"

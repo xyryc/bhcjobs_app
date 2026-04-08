@@ -40,7 +40,7 @@ export const JobCard = ({ job, onPress }: JobCardProps) => {
         {job.company?.image ? (
           <Image
             source={{
-              uri: `${process.env.EXPO_PUBLIC_API_BASE_URL}/storage/company-image/${job.company.image}`,
+              uri: `${process.env.EXPO_PUBLIC_STORAGE_BASE_URL}/company-image/${job.company.image}`,
             }}
             className="h-12 w-12 rounded-md border border-gray-200"
             resizeMode="cover"

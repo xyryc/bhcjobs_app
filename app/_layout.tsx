@@ -1,15 +1,12 @@
 import { Stack } from "expo-router";
 import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { persistor, store } from "../store/store";
+import { store } from "../store/store";
 import "../global.css";
 
 export default function RootLayout() {
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <Stack screenOptions={{ headerShown: false }} />
-      </PersistGate>
+      <Stack screenOptions={{ headerShown: false }} />
     </Provider>
   );
 }
