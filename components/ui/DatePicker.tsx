@@ -37,20 +37,26 @@ export const DatePicker = ({
 
   return (
     <View className="mb-4">
-      <Text className="text-gray-800 font-semibold mb-2 text-base">
+      <Text className="mb-2 text-base font-semibold text-gray-800 dark:text-gray-100">
         {label} {required && <Text className="text-red-500">*</Text>}
       </Text>
       <TouchableOpacity
         onPress={() => setShow(true)}
         className={`border rounded-lg px-4 py-3 ${
-          error ? 'border-red-500' : 'border-gray-300'
-        } bg-white`}
+          error ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'
+        } bg-white dark:bg-gray-900`}
       >
-        <Text className={value ? 'text-gray-800' : 'text-gray-400'}>
+        <Text
+          className={
+            value
+              ? 'text-gray-800 dark:text-gray-100'
+              : 'text-gray-400 dark:text-gray-500'
+          }
+        >
           {formatDate(value)}
         </Text>
       </TouchableOpacity>
-      {error && <Text className="text-red-500 text-sm mt-1">{error}</Text>}
+      {error && <Text className="mt-1 text-sm text-red-500">{error}</Text>}
 
       {show && (
         <DateTimePicker

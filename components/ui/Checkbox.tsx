@@ -20,7 +20,9 @@ export const Checkbox = ({
     >
       <View
         className={`w-5 h-5 rounded border-2 mr-3 items-center justify-center ${
-          checked ? 'bg-blue-500 border-blue-500' : 'border-gray-400'
+          checked
+            ? 'bg-blue-500 border-blue-500'
+            : 'border-gray-400 dark:border-gray-500'
         }`}
       >
         {checked && <Ionicons name="checkmark" size={14} color="white" />}

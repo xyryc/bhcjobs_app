@@ -12,8 +12,10 @@ export const SectionHeader = ({
 }: SectionHeaderProps) => {
   return (
     <View className={containerClassName}>
-      <View className="rounded-full bg-blue-100 px-4 py-2">
-        <Text className="text-sm font-bold text-gray-700">{title}</Text>
+      <View className="rounded-full bg-blue-100 px-4 py-2 dark:bg-blue-950">
+        <Text className="text-sm font-bold text-gray-700 dark:text-blue-100">
+          {title}
+        </Text>
       </View>
     </View>
   );

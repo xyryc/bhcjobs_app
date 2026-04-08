@@ -10,9 +10,9 @@ export const LoadingState = ({
   message = "Loading...",
 }: LoadingStateProps) => {
   return (
-    <SafeAreaView className="flex-1 items-center justify-center bg-gray-50">
+    <SafeAreaView className="flex-1 items-center justify-center bg-gray-50 dark:bg-gray-950">
       <ActivityIndicator size="large" color="#2563EB" />
-      <Text className="mt-3 text-gray-600">{message}</Text>
+      <Text className="mt-3 text-gray-600 dark:text-gray-400">{message}</Text>
     </SafeAreaView>
   );
 };

@@ -1,11 +1,13 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { useColorScheme } from "nativewind";
 import React, { useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  StatusBar,
   Text,
   TouchableOpacity,
   View,
@@ -21,7 +23,9 @@ import { getErrorMessage } from "../utils/errorHandler";
 
 export const LoginScreen = () => {
   const router = useRouter();
+  const { colorScheme } = useColorScheme();
   const dispatch = useAppDispatch();
+  const isDark = colorScheme === "dark";
   const [login] = useLoginMutation();
   const [formData, setFormData] = useState<LoginFormData>({
     mobileNumber: "",
@@ -101,7 +105,8 @@ export const LoginScreen = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1 bg-gray-50 dark:bg-gray-950">
+      <StatusBar barStyle={isDark ? "light-content" : "dark-content"} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"
@@ -114,7 +119,7 @@ export const LoginScreen = () => {
         >
           {/* Header with Icon */}
           <View className="items-center mb-8">
-            <View className="bg-blue-100 rounded-full p-4 mb-4">
+            <View className="mb-4 rounded-full bg-blue-100 p-4 dark:bg-blue-950">
               <Ionicons name="person-outline" size={40} color="#3B82F6" />
             </View>
             <Text className="text-3xl font-bold text-blue-500">
@@ -156,14 +161,14 @@ export const LoginScreen = () => {
 
           {/* Divider */}
           <View className="flex-row items-center my-6">
-            <View className="flex-1 h-px bg-gray-300" />
-            <Text className="mx-4 text-gray-500">OR</Text>
-            <View className="flex-1 h-px bg-gray-300" />
+            <View className="h-px flex-1 bg-gray-300 dark:bg-gray-700" />
+            <Text className="mx-4 text-gray-500 dark:text-gray-400">OR</Text>
+            <View className="h-px flex-1 bg-gray-300 dark:bg-gray-700" />
           </View>
 
           {/* Create Account Link */}
           <View className="flex-row justify-center items-center">
-            <Text className="text-gray-700 text-base">
+            <Text className="text-base text-gray-700 dark:text-gray-200">
               New to BhcJobs.com?{" "}
             </Text>
             <TouchableOpacity onPress={handleCreateAccount}>

@@ -23,7 +23,7 @@ export const Button = ({
       onPress={onPress}
       disabled={disabled || loading}
       className={`py-4 rounded-lg ${
-        isPrimary ? 'bg-blue-500' : 'bg-gray-200'
+        isPrimary ? 'bg-blue-500' : 'bg-gray-200 dark:bg-gray-800'
       } ${(disabled || loading) && 'opacity-50'}`}
     >
       {loading ? (
@@ -31,7 +31,7 @@ export const Button = ({
       ) : (
         <Text
           className={`text-center font-semibold text-base ${
-            isPrimary ? 'text-white' : 'text-gray-800'
+            isPrimary ? 'text-white' : 'text-gray-800 dark:text-gray-100'
           }`}
         >
           {title}

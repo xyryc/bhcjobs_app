@@ -34,14 +34,14 @@ export const Picker = ({
 
   return (
     <View className="mb-4">
-      <Text className="text-gray-800 font-semibold mb-2 text-base">
+      <Text className="mb-2 text-base font-semibold text-gray-800 dark:text-gray-100">
         {label} {required && <Text className="text-red-500">*</Text>}
       </Text>
       <TouchableOpacity
         onPress={() => setModalVisible(true)}
         className={`flex-row items-center border rounded-lg px-4 py-3 ${
-          error ? 'border-red-500' : 'border-gray-300'
-        } bg-white`}
+          error ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'
+        } bg-white dark:bg-gray-900`}
       >
         {icon && (
           <Ionicons
@@ -53,14 +53,16 @@ export const Picker = ({
         )}
         <Text
           className={`flex-1 ${
-            selectedOption ? 'text-gray-800' : 'text-gray-400'
+            selectedOption
+              ? 'text-gray-800 dark:text-gray-100'
+              : 'text-gray-400 dark:text-gray-500'
           }`}
         >
           {selectedOption?.label || placeholder}
         </Text>
         <Ionicons name="chevron-down" size={20} color="#9CA3AF" />
       </TouchableOpacity>
-      {error && <Text className="text-red-500 text-sm mt-1">{error}</Text>}
+      {error && <Text className="mt-1 text-sm text-red-500">{error}</Text>}
 
       <Modal
         visible={modalVisible}
@@ -74,9 +76,9 @@ export const Picker = ({
           onPress={() => setModalVisible(false)}
         >
           <View className="flex-1 justify-end">
-            <View className="bg-white rounded-t-3xl max-h-96">
-              <View className="p-4 border-b border-gray-200">
-                <Text className="text-lg font-semibold text-center">
+            <View className="max-h-96 rounded-t-3xl bg-white dark:bg-gray-900">
+              <View className="border-b border-gray-200 p-4 dark:border-gray-800">
+                <Text className="text-center text-lg font-semibold text-gray-900 dark:text-gray-100">
                   {label}
                 </Text>
               </View>
@@ -89,13 +91,13 @@ export const Picker = ({
                       onChange(item.value);
                       setModalVisible(false);
                     }}
-                    className="px-6 py-4 border-b border-gray-100"
+                    className="border-b border-gray-100 px-6 py-4 dark:border-gray-800"
                   >
                     <Text
                       className={`text-base ${
                         value === item.value
                           ? 'text-blue-500 font-semibold'
-                          : 'text-gray-800'
+                          : 'text-gray-800 dark:text-gray-100'
                       }`}
                     >
                       {item.label}

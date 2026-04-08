@@ -32,7 +32,7 @@ export const JobCard = ({ job, onPress }: JobCardProps) => {
 
   return (
     <TouchableOpacity
-      className="rounded-2xl border border-gray-200 bg-white px-4 py-4 mb-3"
+      className="mb-3 rounded-2xl border border-gray-200 bg-white px-4 py-4 dark:border-gray-800 dark:bg-gray-900"
       activeOpacity={0.8}
       onPress={() => onPress?.(job)}
     >
@@ -42,17 +42,20 @@ export const JobCard = ({ job, onPress }: JobCardProps) => {
             source={{
               uri: `${process.env.EXPO_PUBLIC_STORAGE_BASE_URL}/company-image/${job.company.image}`,
             }}
-            className="h-12 w-12 rounded-md border border-gray-200"
+            className="h-12 w-12 rounded-md border border-gray-200 dark:border-gray-700"
             resizeMode="cover"
           />
         ) : null}
 
         <View className={job.company?.image ? "ml-3 flex-1" : "flex-1"}>
-          <Text className="text-base font-bold text-gray-800" numberOfLines={1}>
+          <Text
+            className="text-base font-bold text-gray-800 dark:text-gray-100"
+            numberOfLines={1}
+          >
             {job.job_title}
           </Text>
           <Text
-            className="mt-1 text-sm font-medium text-gray-600"
+            className="mt-1 text-sm font-medium text-gray-600 dark:text-gray-400"
             numberOfLines={1}
           >
             {job.company_name}
@@ -64,20 +67,20 @@ export const JobCard = ({ job, onPress }: JobCardProps) => {
         {formatSalary(job)}
       </Text>
       {foodText ? (
-        <Text className="mt-1 text-sm font-medium text-gray-600">
+        <Text className="mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">
           {foodText}
         </Text>
       ) : null}
 
       <View className="flex-row items-center mt-2">
-        <View className="mr-2 rounded-full bg-blue-100 px-3 py-1">
-          <Text className="text-xs font-medium text-blue-700 capitalize">
+        <View className="mr-2 rounded-full bg-blue-100 px-3 py-1 dark:bg-blue-950">
+          <Text className="text-xs font-medium capitalize text-blue-700 dark:text-blue-200">
             {job?.country?.name}
           </Text>
         </View>
 
-        <View className="mr-2 rounded-full bg-blue-100 px-3 py-1">
-          <Text className="text-xs font-medium text-blue-700 capitalize">
+        <View className="mr-2 rounded-full bg-blue-100 px-3 py-1 dark:bg-blue-950">
+          <Text className="text-xs font-medium capitalize text-blue-700 dark:text-blue-200">
             {job?.type}
           </Text>
         </View>

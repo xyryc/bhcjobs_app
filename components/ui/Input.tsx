@@ -22,13 +22,13 @@ export const Input = ({
 
   return (
     <View className="mb-4">
-      <Text className="text-gray-800 font-semibold mb-2 text-base">
+      <Text className="mb-2 text-base font-semibold text-gray-800 dark:text-gray-100">
         {label} {required && <Text className="text-red-500">*</Text>}
       </Text>
       <View
         className={`flex-row items-center border rounded-lg px-4 ${
-          error ? 'border-red-500' : 'border-gray-300'
-        } bg-white`}
+          error ? 'border-red-500' : 'border-gray-300 dark:border-gray-700'
+        } bg-white dark:bg-gray-900`}
       >
         {icon && (
           <Ionicons
@@ -39,8 +39,8 @@ export const Input = ({
           />
         )}
         <TextInput
-          className="flex-1 py-3 text-gray-800 text-base"
-          placeholderTextColor="#D1D5DB"
+          className="flex-1 py-3 text-base text-gray-800 dark:text-gray-100"
+          placeholderTextColor="#9CA3AF"
           secureTextEntry={isPassword && !showPassword}
           {...props}
         />
@@ -54,7 +54,7 @@ export const Input = ({
           </TouchableOpacity>
         )}
       </View>
-      {error && <Text className="text-red-500 text-sm mt-1">{error}</Text>}
+      {error && <Text className="mt-1 text-sm text-red-500">{error}</Text>}
     </View>
   );
 };

@@ -1,20 +1,24 @@
 import React from "react";
-import { FlatList, ScrollView, Text, View } from "react-native";
+import { FlatList, ScrollView, StatusBar, Text, View } from "react-native";
+import { useColorScheme } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CompanyCard } from "../components/ui/CompanyCard";
-import { ErrorState } from "../components/ui/ErrorState";
-import { IndustryCard } from "../components/ui/IndustryCard";
-import { JobCard } from "../components/ui/JobCard";
-import { LoadingState } from "../components/ui/LoadingState";
-import { SectionHeader } from "../components/ui/SectionHeader";
+import { CompanyCard } from "../../components/ui/CompanyCard";
+import { ErrorState } from "../../components/ui/ErrorState";
+import { IndustryCard } from "../../components/ui/IndustryCard";
+import { JobCard } from "../../components/ui/JobCard";
+import { LoadingState } from "../../components/ui/LoadingState";
+import { SectionHeader } from "../../components/ui/SectionHeader";
 import {
   useGetCompaniesQuery,
   useGetIndustriesQuery,
   useGetJobsQuery,
-} from "../store/services/homeApi";
-import type { Company, Industry, Job } from "../types/home";
+} from "../../store/services/homeApi";
+import type { Company, Industry, Job } from "../../types/home";
 
 export default function HomeScreen() {
+  const { colorScheme } = useColorScheme();
+  const isDark = colorScheme === "dark";
+
   const {
     data: industriesResponse,
     isLoading: industriesLoading,
@@ -43,19 +47,24 @@ export default function HomeScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView
+      className="flex-1 bg-gray-50 dark:bg-gray-950"
+      edges={["top", "left", "right"]}
+    >
+      <StatusBar barStyle={isDark ? "light-content" : "dark-content"} />
+
       <ScrollView contentContainerStyle={{ paddingBottom: 24 }}>
         <SectionHeader title="Popular Industries" />
 
         {industriesFetching && (
-          <Text className="px-6 pb-2 text-center text-sm text-gray-500">
+          <Text className="px-6 pb-2 text-center text-sm text-gray-500 dark:text-gray-400">
             Refreshing industries...
           </Text>
         )}
 
         {industriesError ? (
           <View className="items-center px-6 pb-8">
-            <Text className="text-center text-sm text-red-500">
+            <Text className="text-center text-sm text-red-500 dark:text-red-400">
               Failed to load industries.
             </Text>
           </View>
@@ -77,7 +86,9 @@ export default function HomeScreen() {
             columnWrapperStyle={{ gap: 12, marginBottom: 12 }}
             ListEmptyComponent={
               <View className="items-center py-10">
-                <Text className="text-gray-500">No industries found.</Text>
+                <Text className="text-gray-500 dark:text-gray-400">
+                  No industries found.
+                </Text>
               </View>
             }
           />
@@ -89,14 +100,14 @@ export default function HomeScreen() {
         />
 
         {companiesFetching && (
-          <Text className="px-6 pb-2 text-center text-sm text-gray-500">
+          <Text className="px-6 pb-2 text-center text-sm text-gray-500 dark:text-gray-400">
             Refreshing companies...
           </Text>
         )}
 
         {companiesError ? (
           <View className="items-center px-6 pb-8">
-            <Text className="text-center text-sm text-red-500">
+            <Text className="text-center text-sm text-red-500 dark:text-red-400">
               Failed to load companies.
             </Text>
           </View>
@@ -118,7 +129,9 @@ export default function HomeScreen() {
             columnWrapperStyle={{ gap: 12, marginBottom: 12 }}
             ListEmptyComponent={
               <View className="items-center py-10">
-                <Text className="text-gray-500">No companies found.</Text>
+                <Text className="text-gray-500 dark:text-gray-400">
+                  No companies found.
+                </Text>
               </View>
             }
           />
@@ -130,14 +143,14 @@ export default function HomeScreen() {
         />
 
         {jobsFetching && (
-          <Text className="px-6 pb-2 text-center text-sm text-gray-500">
+          <Text className="px-6 pb-2 text-center text-sm text-gray-500 dark:text-gray-400">
             Refreshing jobs...
           </Text>
         )}
 
         {jobsError ? (
           <View className="items-center px-6 pb-8">
-            <Text className="text-center text-sm text-red-500">
+            <Text className="text-center text-sm text-red-500 dark:text-red-400">
               Failed to load jobs.
             </Text>
           </View>
@@ -154,7 +167,9 @@ export default function HomeScreen() {
             }}
             ListEmptyComponent={
               <View className="items-center py-10">
-                <Text className="text-gray-500">No jobs found.</Text>
+                <Text className="text-gray-500 dark:text-gray-400">
+                  No jobs found.
+                </Text>
               </View>
             }
           />

@@ -10,7 +10,7 @@ interface IndustryCardProps {
 export const IndustryCard = ({ industry, onPress }: IndustryCardProps) => {
   return (
     <TouchableOpacity
-      className="h-32 px-2 flex-1 items-center justify-center rounded-2xl border border-gray-200 bg-white"
+      className="h-32 px-2 flex-1 items-center justify-center rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900"
       activeOpacity={0.8}
       onPress={() => onPress?.(industry)}
     >
@@ -23,12 +23,12 @@ export const IndustryCard = ({ industry, onPress }: IndustryCardProps) => {
       />
 
       <Text
-        className="my-1 text-center text-base font-bold text-gray-700"
+        className="my-1 text-center text-base font-bold text-gray-700 dark:text-gray-100"
         numberOfLines={2}
       >
         {industry.name}
       </Text>
-      <Text className="text-center text-sm font-medium text-gray-500">
+      <Text className="text-center text-sm font-medium text-gray-500 dark:text-gray-400">
         {industry.jobs_count} Available Jobs
       </Text>
     </TouchableOpacity>

@@ -1,10 +1,12 @@
 import { useRouter } from "expo-router";
+import { useColorScheme } from "nativewind";
 import React, { useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  StatusBar,
   Text,
   TouchableOpacity,
   View,
@@ -27,7 +29,9 @@ const genderOptions = [
 
 export const RegisterScreen = () => {
   const router = useRouter();
+  const { colorScheme } = useColorScheme();
   const [register] = useRegisterMutation();
+  const isDark = colorScheme === "dark";
   const [formData, setFormData] = useState<RegisterFormData>({
     fullName: "",
     mobileNumber: "",
@@ -175,7 +179,8 @@ export const RegisterScreen = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1 bg-gray-50 dark:bg-gray-950">
+      <StatusBar barStyle={isDark ? "light-content" : "dark-content"} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? 16 : 24}
@@ -189,7 +194,7 @@ export const RegisterScreen = () => {
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="on-drag"
         >
-          <Text className="text-3xl font-bold text-blue-500 text-center mb-8">
+          <Text className="mb-8 text-center text-3xl font-bold text-blue-500">
             Create an account
           </Text>
 
@@ -287,7 +292,7 @@ export const RegisterScreen = () => {
               checked={agreeToTerms}
               onChange={setAgreeToTerms}
               label={
-                <Text className="text-gray-700 text-sm">
+                <Text className="text-sm text-gray-700 dark:text-gray-200">
                   By continuing, you agree to our{" "}
                   <Text className="text-blue-500 font-semibold">
                     Terms of Service
@@ -309,13 +314,13 @@ export const RegisterScreen = () => {
           />
 
           <View className="flex-row items-center my-6">
-            <View className="flex-1 h-px bg-gray-300" />
-            <Text className="mx-4 text-gray-500">OR</Text>
-            <View className="flex-1 h-px bg-gray-300" />
+            <View className="h-px flex-1 bg-gray-300 dark:bg-gray-700" />
+            <Text className="mx-4 text-gray-500 dark:text-gray-400">OR</Text>
+            <View className="h-px flex-1 bg-gray-300 dark:bg-gray-700" />
           </View>
 
           <View className="flex-row justify-center items-center">
-            <Text className="text-gray-700 text-base">
+            <Text className="text-base text-gray-700 dark:text-gray-200">
               Already have an account?{" "}
             </Text>
             <TouchableOpacity onPress={() => router.replace("/")}>

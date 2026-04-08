@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { useColorScheme } from "nativewind";
 import {
   OTPInput,
   REGEXP_ONLY_DIGITS,
@@ -11,6 +12,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
+  StatusBar,
   Text,
   TouchableOpacity,
   View,
@@ -24,9 +26,11 @@ import { getErrorMessage } from "../utils/errorHandler";
 
 export const VerifyOTPScreen = () => {
   const router = useRouter();
+  const { colorScheme } = useColorScheme();
   const params = useLocalSearchParams<{ phone?: string; email?: string }>();
   const [otp, setOtp] = useState("");
   const otpRef = useRef<OTPInputRef>(null);
+  const isDark = colorScheme === "dark";
 
   const [verifyOTP, { isLoading }] = useVerifyOTPMutation();
 
@@ -89,7 +93,8 @@ export const VerifyOTPScreen = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1 bg-gray-50 dark:bg-gray-950">
+      <StatusBar barStyle={isDark ? "light-content" : "dark-content"} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"
@@ -97,7 +102,7 @@ export const VerifyOTPScreen = () => {
         <View className="flex-1 px-6 py-8">
           {/* Header */}
           <View className="items-center mb-8">
-            <View className="bg-blue-100 rounded-full p-4 mb-4">
+            <View className="mb-4 rounded-full bg-blue-100 p-4 dark:bg-blue-950">
               <Ionicons
                 name="shield-checkmark-outline"
                 size={50}
@@ -107,14 +112,16 @@ export const VerifyOTPScreen = () => {
             <Text className="text-3xl font-bold text-blue-500 mb-2">
               Verify OTP
             </Text>
-            <Text className="text-gray-600 text-center text-base">
+            <Text className="text-center text-base text-gray-600 dark:text-gray-400">
               We've sent a 4-digit code to
             </Text>
-            <Text className="text-gray-800 font-semibold text-base mt-1">
+            <Text className="mt-1 text-base font-semibold text-gray-800 dark:text-gray-100">
               {phone}
             </Text>
             {email && (
-              <Text className="text-gray-600 text-sm mt-1">{email}</Text>
+              <Text className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                {email}
+              </Text>
             )}
           </View>
 
@@ -132,11 +139,13 @@ export const VerifyOTPScreen = () => {
                   {slots.map((slot, index) => (
                     <Pressable key={index} onPress={slot.focus}>
                       <View
-                        className={`mx-2 h-16 w-16 items-center justify-center rounded-lg border-2 bg-white ${
-                          slot.isActive ? "border-blue-500" : "border-gray-300"
+                        className={`mx-2 h-16 w-16 items-center justify-center rounded-lg border-2 bg-white dark:bg-gray-900 ${
+                          slot.isActive
+                            ? "border-blue-500"
+                            : "border-gray-300 dark:border-gray-700"
                         }`}
                       >
-                        <Text className="text-2xl font-bold text-gray-900">
+                        <Text className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                           {slot.char ?? ""}
                         </Text>
                       </View>
@@ -158,7 +167,7 @@ export const VerifyOTPScreen = () => {
           {/* Back to Login */}
           <View className="mt-8 items-center">
             <TouchableOpacity onPress={() => router.replace("/")}>
-              <Text className="text-gray-600 text-base">
+              <Text className="text-base text-gray-600 dark:text-gray-400">
                 Wrong number?{" "}
                 <Text className="text-blue-500 font-semibold">
                   Change Number
