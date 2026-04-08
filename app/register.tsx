@@ -198,7 +198,7 @@ export default function RegisterRoute() {
             contentFit="contain"
           />
 
-          <Text className="mb-8 text-center text-3xl font-bold text-blue-500">
+          <Text className="mb-8 text-center text-xl font-bold text-blue-500">
             Create an account
           </Text>
 

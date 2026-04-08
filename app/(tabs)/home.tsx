@@ -1,6 +1,6 @@
+import { useColorScheme } from "nativewind";
 import React from "react";
 import { ScrollView, StatusBar } from "react-native";
-import { useColorScheme } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CompaniesSection } from "../../components/ui/CompaniesSection";
 import { ErrorState } from "../../components/ui/ErrorState";
@@ -61,16 +61,16 @@ export default function HomeScreen() {
           isError={industriesError}
         />
 
-        <CompaniesSection
-          companies={companiesResponse?.data ?? []}
-          isFetching={companiesFetching}
-          isError={companiesError}
-        />
-
         <JobsSection
           jobs={jobsResponse?.data ?? []}
           isFetching={jobsFetching}
           isError={jobsError}
+        />
+
+        <CompaniesSection
+          companies={companiesResponse?.data ?? []}
+          isFetching={companiesFetching}
+          isError={companiesError}
         />
       </ScrollView>
     </SafeAreaView>
