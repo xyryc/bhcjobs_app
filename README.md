@@ -1,50 +1,101 @@
-# Welcome to your Expo app 👋
+# BHC Jobs App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+React Native app built with Expo, Expo Router, NativeWind, and Redux Toolkit.
 
-## Get started
+## Prerequisites
 
-1. Install dependencies
+- Node.js 18+
+- npm 9+
+- Android Studio (for Android emulator)
+- Xcode (for iOS simulator, macOS only)
 
-   ```bash
-   npm install
-   ```
+## Environment Setup
 
-2. Start the app
+Create a `.env` file in the project root.
 
-   ```bash
-   npx expo start
-   ```
+You can copy from `.env.example`:
 
-In the output, you'll find options to open the app in a
+```bash
+cp .env.example .env
+```
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Set these values:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+```env
+EXPO_PUBLIC_API_BASE_URL=https://your-api-base-url
+EXPO_PUBLIC_STORAGE_BASE_URL=https://your-storage-base-url
+```
 
-## Get a fresh project
+## Install Dependencies
 
-When you're ready, run:
+```bash
+npm install
+```
+
+## Run the App
+
+Start Expo dev server:
+
+```bash
+npm run start
+```
+
+Run on Android (native project):
+
+```bash
+npm run android
+```
+
+Run on iOS (native project, macOS only):
+
+```bash
+npm run ios
+```
+
+Run on web:
+
+```bash
+npm run web
+```
+
+## Project Structure
+
+- `app/` Expo Router routes and layouts
+- `components/ui/` reusable UI components
+- `store/` Redux store, slices, and RTK Query services
+- `types/` shared TypeScript types
+- `utils/` helper utilities
+
+## Useful Commands
+
+Lint:
+
+```bash
+npm run lint
+```
+
+Reset starter structure script (if needed):
 
 ```bash
 npm run reset-project
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Notes
 
-## Learn more
+- Auth/session state is in-memory only (not persisted across app restarts).
+- Theme selection (light/dark) is persisted locally.
+- Home banner wave animation uses `react-native-reanimated` and `react-native-svg`.
 
-To learn more about developing your project with Expo, look at the following resources:
+## Troubleshooting
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+If Metro cache behaves unexpectedly:
 
-## Join the community
+```bash
+npx expo start -c
+```
 
-Join our community of developers creating universal apps.
+If Android build has stale state, stop the dev server and run:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+npm run android
+```

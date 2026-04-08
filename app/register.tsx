@@ -1,3 +1,4 @@
+import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { useColorScheme } from "nativewind";
 import React, { useState } from "react";
@@ -170,7 +171,7 @@ export default function RegisterRoute() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50 dark:bg-gray-950">
+    <SafeAreaView className="flex-1 bg-white dark:bg-gray-950">
       <StatusBar barStyle={isDark ? "light-content" : "dark-content"} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -185,6 +186,18 @@ export default function RegisterRoute() {
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="on-drag"
         >
+          <Image
+            source={require("@/assets/images/app-icon.png")}
+            style={{
+              width: 100,
+              height: 100,
+              alignSelf: "center",
+              borderRadius: 20,
+              marginBottom: 10,
+            }}
+            contentFit="contain"
+          />
+
           <Text className="mb-8 text-center text-3xl font-bold text-blue-500">
             Create an account
           </Text>

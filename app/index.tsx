@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { useColorScheme } from "nativewind";
 import React, { useState } from "react";
@@ -98,7 +98,7 @@ export default function Index() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50 dark:bg-gray-950">
+    <SafeAreaView className="flex-1 bg-white dark:bg-gray-950">
       <StatusBar barStyle={isDark ? "light-content" : "dark-content"} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -111,10 +111,18 @@ export default function Index() {
           keyboardShouldPersistTaps="handled"
         >
           <View className="mb-8 items-center">
-            <View className="mb-4 rounded-full bg-blue-100 p-4 dark:bg-blue-950">
-              <Ionicons name="person-outline" size={40} color="#3B82F6" />
-            </View>
-            <Text className="text-3xl font-bold text-blue-500">
+            <Image
+              source={require("@/assets/images/app-icon.png")}
+              style={{
+                width: 100,
+                height: 100,
+                borderRadius: 20,
+                marginBottom: 10,
+              }}
+              contentFit="contain"
+            />
+
+            <Text className="text-xl font-bold text-blue-500">
               Job Seeker Login
             </Text>
           </View>
